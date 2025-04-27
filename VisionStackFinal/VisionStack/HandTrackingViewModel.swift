@@ -9,6 +9,7 @@ import RealityKit
 import SwiftUI
 import ARKit
 import RealityKitContent
+import UIKit
 
 @MainActor class HandTrackingViewModel: ObservableObject {
     private let session = ARKitSession()
@@ -17,6 +18,7 @@ import RealityKitContent
     private let sceneReconstruction = SceneReconstructionProvider()
     
     private var contentEntity = Entity()
+    @Published var windowPosition: SIMD3<Float>?
     
     private var meshEntities = [UUID : ModelEntity]()
     
@@ -89,23 +91,9 @@ import RealityKitContent
     }
     
     func placeCube() async {
-        guard let leftFingerPosition = fingerEntities[.left]?.transform.translation else {return}
+        guard let leftFingerPosition = fingerEntities[.left]?.transform.translation else { return }
         
         let placementLocation = leftFingerPosition + SIMD3<Float>(0, -0.05, 0)
-        
-        let entity = ModelEntity(mesh: .generateBox(size: 0.1), materials: [SimpleMaterial(color: .systemBlue, isMetallic: false)], collisionShape: .generateBox(size: SIMD3<Float>(repeating: 0.1)), mass: 1.0)
-        
-        entity.setPosition(placementLocation, relativeTo: nil)
-        
-        entity.components.set(InputTargetComponent(allowedInputTypes: .indirect))
-        entity.components.set(GroundingShadowComponent(castsShadow: true))
-        
-        let material = PhysicsMaterialResource.generate(friction: 0.8, restitution: 0.0)
-        
-        entity.components.set(PhysicsBodyComponent(shapes: entity.collision!.shapes, mass: 1.0, material: material, mode: .dynamic))
-        
-        contentEntity.addChild(entity)
-        
+        windowPosition = placementLocation
     }
-    
 }

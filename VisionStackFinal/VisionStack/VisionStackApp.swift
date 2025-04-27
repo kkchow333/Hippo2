@@ -18,5 +18,16 @@ struct VisionStackApp: App {
             StackingView()
         }
         
+        // Add window destination for our dynamic windows
+        WindowGroup(for: DynamicWindowId.self) { windowId in
+            VStack {
+                Text("This Works!")
+                    .font(.title)
+                    .padding()
+            }
+            .frame(width: 300, height: 200)
+            .background(.ultraThinMaterial)
+        }
+        .defaultSize(width: 300, height: 200)
     }
 }

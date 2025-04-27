@@ -9,8 +9,19 @@ import SwiftUI
 import RealityKit
 import RealityKitContent
 
+// Define a proper window identifier type
+struct DynamicWindowId: Hashable, Codable, Identifiable {
+    let id: String
+    
+    init() {
+        self.id = UUID().uuidString
+    }
+}
+
 struct StackingView: View {
     @StateObject var model = HandTrackingViewModel()
+    @Environment(\.openWindow) private var openWindow
+    @State private var windows: [DynamicWindowId] = []
     
     var body: some View {
         RealityView { content in
@@ -22,13 +33,20 @@ struct StackingView: View {
         }.task {
             await model.processReconstructionUpdates()
         }.gesture(SpatialTapGesture().targetedToAnyEntity().onEnded({ value in
-            
             Task {
                 await model.placeCube()
             }
-            
-            
         }))
+        .onChange(of: model.windowPosition) { _, newPosition in
+            guard let position = newPosition else { return }
+            
+            // Create a new window identifier
+            let windowId = DynamicWindowId()
+            windows.append(windowId)
+            
+            // Open a new window at the specified position
+            openWindow(value: windowId)
+        }
     }
 }
 
