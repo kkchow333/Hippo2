@@ -115,8 +115,6 @@ private struct TagListView: View {
             }
             .padding([.leading, .trailing], 8)
             .padding([.top, .bottom], 8)
-            .background(Color.black.opacity(0.2))
-            .cornerRadius(12)
             .animation(.easeInOut, value: showHiddenTags)
         }
     }
@@ -163,14 +161,11 @@ private struct TagButton: View {
             .padding(.horizontal, 16)
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(tag.isSelected || tag.type == .plus ? Color.white : Color.white.opacity(0.3))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color(.systemGray4), lineWidth: 1)
-                    )
+                    .fill(tag.isSelected || tag.type == .plus ? Color.pink : Color.blue.opacity(0.3))
             )
             .foregroundColor(tag.isSelected || tag.type == .plus ? Color(.darkGray) : .white)
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -228,9 +223,7 @@ private struct TextInputView: View {
             TextField("Text Input", text: $inputText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .foregroundColor(.black)
-                .accentColor(.black)
-                .frame(maxWidth: .infinity)
-                .frame(height: 40)
+             
                 .onSubmit {
                     if !inputText.isEmpty {
                         hasSubmittedText = true
