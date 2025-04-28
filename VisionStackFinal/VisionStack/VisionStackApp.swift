@@ -22,6 +22,6 @@ struct VisionStackApp: App {
         WindowGroup(for: DynamicWindowId.self) { windowId in
             DynamicWindowView()
         }
-        .defaultSize(width: 500, height: 200)
+        .defaultSize(width: 500, height: 300)
     }
 }
