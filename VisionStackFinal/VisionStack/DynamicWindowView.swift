@@ -23,48 +23,78 @@ struct DynamicWindowView: View {
     @State private var hasSubmittedText: Bool = false
     @State private var selectedTags: Set<String> = []
     @State private var isImageLoaded: Bool = false
+    @FocusState private var isInputFocused: Bool
     
     // Customizable window dimensions
     let windowWidth: CGFloat = 500
-    let windowHeight: CGFloat = 300
     
     var body: some View {
-        VStack(spacing: 16) {
-            // Main Content
-            VStack(spacing: 20) {
-                HStack(alignment: .top, spacing: 15) {
-                    // Profile Image
-                    ProfileImageView(
-                        imageURL: URL(string: "https://example.com/profile.jpg")!,
-                        isLoaded: $isImageLoaded
+        VStack(alignment: .leading, spacing: 24) {
+            // Main Window Content
+            HStack(alignment: .top, spacing: 12) {
+                // Profile Image
+                Circle()
+                    .fill(Color(.systemGray5))
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        Image(systemName: "person.fill")
+                            .foregroundColor(Color(.systemGray2))
                     )
-                    
-                    // Text Input or Message
-                    if !hasSubmittedText || isEditing {
-                        TextInputView(
-                            inputText: $inputText,
-                            hasSubmittedText: $hasSubmittedText,
-                            isEditing: $isEditing
-                        )
-                    } else {
-                        SubmittedTextView(
-                            text: inputText,
-                            onEdit: { isEditing = true }
-                        )
+                
+                // Text Input or Message
+                if !hasSubmittedText || isEditing {
+                    ZStack(alignment: .leading) {
+                        if inputText.isEmpty {
+                            Text("What would you like to do?")
+                                .foregroundColor(Color(.placeholderText))
+                                .font(.system(size: 16))
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 8)
+                        }
+                        
+                        TextEditor(text: $inputText)
+                            .font(.system(size: 16))
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: max(36, min(120, CGFloat(inputText.count / 30) * 20)))
+                            .scrollContentBackground(.hidden)
+                            .background(Color(.lightGray))
+                            .cornerRadius(8)
+                            .focused($isInputFocused)
+                            .onChange(of: inputText) { newValue in
+                                if newValue.contains("\n") {
+                                    inputText = newValue.replacingOccurrences(of: "\n", with: "")
+                                    if !inputText.isEmpty {
+                                        hasSubmittedText = true
+                                        isEditing = false
+                                        isInputFocused = false
+                                    }
+                                }
+                            }
                     }
+                } else {
+                    SubmittedTextView(
+                        text: inputText,
+                        onEdit: {
+                            isEditing = true
+                            isInputFocused = true
+                        }
+                    )
                 }
             }
-            .padding(20)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 16)
+            .frame(width: windowWidth)
             .background(Color.white)
-            .cornerRadius(20)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
             
             // Tags Section
             TagListView(selectedTags: $selectedTags)
-                .frame(height: 60)
+                .frame(height: 40)
+                .frame(maxWidth: windowWidth)
         }
-        .frame(width: windowWidth, height: windowHeight)
-        .background(Color.white)
-        .cornerRadius(20)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
     }
 }
 
@@ -75,7 +105,7 @@ private struct TagListView: View {
     @State private var tags: [Tag] = [
         Tag(type: .time, title: "Time", isSelected: true),
         Tag(type: .date, title: "Date", isSelected: true),
-        Tag(type: .location, title: "Location", isSelected: true),
+        Tag(type: .location, title: "Front door", isSelected: true),
         Tag(type: .plus, title: "+", isSelected: false),
         Tag(type: .color, title: "Color", isSelected: false),
         Tag(type: .repeating, title: "Repeating", isSelected: false),
@@ -113,8 +143,7 @@ private struct TagListView: View {
                 }
                 .opacity(showHiddenTags && !tag.isSelected && tag.type != .plus ? 0.6 : 1.0)
             }
-            .padding([.leading, .trailing], 8)
-            .padding([.top, .bottom], 8)
+            .padding(.horizontal, 8)
             .animation(.easeInOut, value: showHiddenTags)
         }
     }
@@ -146,7 +175,7 @@ private struct TagButton: View {
             HStack(spacing: 4) {
                 Text(tag.title)
                     .font(.system(size: 15))
-                    .fontWeight(tag.isSelected ? .medium : .regular)
+                    .fontWeight(.medium)
                 
                 if tag.type == .time || tag.type == .date {
                     Image(systemName: "chevron.down")
@@ -161,79 +190,44 @@ private struct TagButton: View {
             .padding(.horizontal, 16)
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(tag.isSelected || tag.type == .plus ? Color.pink : Color.blue.opacity(0.3))
+                    .fill(Color.white)
             )
-            .foregroundColor(tag.isSelected || tag.type == .plus ? Color(.darkGray) : .white)
+            .foregroundColor(Color(.darkGray))
         }
         .buttonStyle(PlainButtonStyle())
     }
 }
 
 // MARK: - Other Subviews
-private struct ProfileImageView: View {
-    let imageURL: URL
-    @Binding var isLoaded: Bool
-    
-    var body: some View {
-        AsyncImage(url: imageURL) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-                    .frame(width: 80, height: 80)
-                    .onAppear { isLoaded = false }
-            case .success(let image):
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-                    .onAppear { isLoaded = true }
-            case .failure(_):
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(.gray)
-                    .onAppear { isLoaded = true }
-            @unknown default:
-                EmptyView()
-                    .onAppear { isLoaded = false }
-            }
-        }
-        .background(
-            Circle()
-                .stroke(Color.gray.opacity(0.3), lineWidth: 2)
-        )
-        .padding(10)
-        .background(
-            Circle()
-                .fill(Color.white)
-                .shadow(color: .gray.opacity(0.2), radius: 5)
-        )
-    }
-}
-
 private struct TextInputView: View {
     @Binding var inputText: String
     @Binding var hasSubmittedText: Bool
     @Binding var isEditing: Bool
+    @FocusState private var isFocused: Bool
     
     var body: some View {
-        HStack {
-            TextField("Text Input", text: $inputText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .foregroundColor(.black)
-             
-                .onSubmit {
-                    if !inputText.isEmpty {
-                        hasSubmittedText = true
-                        isEditing = false
-                    }
+        TextField("What would you like to do?", text: $inputText, axis: .vertical)
+            .textFieldStyle(PlainTextFieldStyle())
+            .font(.system(size: 16))
+            .foregroundColor(.black)
+            .lineLimit(1...5)
+            .frame(maxWidth: .infinity)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(.systemBackground))
+            )
+            .focused($isFocused)
+            .onSubmit {
+                if !inputText.isEmpty {
+                    hasSubmittedText = true
+                    isEditing = false
+                    isFocused = false
                 }
-        }
-        .padding(.horizontal, 15)
-        .padding(.vertical, 10)
-        .cornerRadius(25)
+            }
+            .submitLabel(.done)
     }
 }
 
@@ -244,7 +238,7 @@ private struct SubmittedTextView: View {
     var body: some View {
         HStack(alignment: .top) {
             Text(text)
-                .font(.system(size: 20))
+                .font(.system(size: 16))
                 .foregroundColor(.black)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
@@ -256,11 +250,9 @@ private struct SubmittedTextView: View {
                     .font(.system(size: 16))
                     .foregroundColor(.gray)
             }
+            .buttonStyle(PlainButtonStyle())
         }
-        .padding(.horizontal, 15)
-        .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
-        .cornerRadius(25)
     }
 }
 
