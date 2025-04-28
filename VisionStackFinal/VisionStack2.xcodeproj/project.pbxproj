@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE3AD0B12DBF63FC004754BE /* DynamicWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AD0B02DBF63FC004754BE /* DynamicWindowView.swift */; };
+		CE3AD0B32DBF66BD004754BE /* Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AD0B22DBF66BA004754BE /* Tags.swift */; };
 		FE022D812BAF16F40067F4EF /* DragRotationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE022D802BAF16F40067F4EF /* DragRotationModifier.swift */; };
 		FE022D852BAF19990067F4EF /* ModelEntity+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE022D832BAF19980067F4EF /* ModelEntity+Extension.swift */; };
 		FE30A0362BAEFC1600DA6A38 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = FE30A0352BAEFC1600DA6A38 /* RealityKitContent */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE3AD0B02DBF63FC004754BE /* DynamicWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicWindowView.swift; sourceTree = "<group>"; };
+		CE3AD0B22DBF66BA004754BE /* Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tags.swift; sourceTree = "<group>"; };
 		FE022D802BAF16F40067F4EF /* DragRotationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragRotationModifier.swift; sourceTree = "<group>"; };
 		FE022D832BAF19980067F4EF /* ModelEntity+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ModelEntity+Extension.swift"; sourceTree = "<group>"; };
 		FE30A0302BAEFC1600DA6A38 /* VisionStack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisionStack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +73,8 @@
 				FE8F8CB82BAF6DB000DC93A5 /* Helper */,
 				FE30A0372BAEFC1600DA6A38 /* VisionStackApp.swift */,
 				FE30A0392BAEFC1600DA6A38 /* ContentView.swift */,
+				CE3AD0B02DBF63FC004754BE /* DynamicWindowView.swift */,
+				CE3AD0B22DBF66BA004754BE /* Tags.swift */,
 				FEBCB80E2BAF758300BD99BA /* StackingView.swift */,
 				FEBCB8102BAF76D400BD99BA /* HandTrackingViewModel.swift */,
 				FE30A03D2BAEFC1700DA6A38 /* Assets.xcassets */,
@@ -179,8 +185,10 @@
 			files = (
 				FE30A03A2BAEFC1600DA6A38 /* ContentView.swift in Sources */,
 				FE30A0382BAEFC1600DA6A38 /* VisionStackApp.swift in Sources */,
+				CE3AD0B12DBF63FC004754BE /* DynamicWindowView.swift in Sources */,
 				FEBCB80F2BAF758300BD99BA /* StackingView.swift in Sources */,
 				FE022D812BAF16F40067F4EF /* DragRotationModifier.swift in Sources */,
+				CE3AD0B32DBF66BD004754BE /* Tags.swift in Sources */,
 				FE30A0492BAF0ACB00DA6A38 /* SampleModel.swift in Sources */,
 				FEBCB8112BAF76D400BD99BA /* HandTrackingViewModel.swift in Sources */,
 				FE022D852BAF19990067F4EF /* ModelEntity+Extension.swift in Sources */,
