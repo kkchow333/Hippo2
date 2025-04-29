@@ -92,13 +92,15 @@ struct TagListView: View {
             }
             
             if showTimePicker {
-                VStack {
+                VStack(spacing: 0) {
                     DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
                         .datePickerStyle(.wheel)
                         .labelsHidden()
-                        .frame(width: 200, height: 100)
-                        .colorScheme(.dark)
-                        .accentColor(.white)
+                        .frame(width: 200, height: 150)
+                        .colorScheme(.light)
+                        .accentColor(.blue)
+                    
+                    Spacer()
                     
                     Button("Set") {
                         let formatter = DateFormatter()
@@ -108,28 +110,32 @@ struct TagListView: View {
                         }
                         showTimePicker = false
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .background(Color.white.opacity(0.2))
+                    .buttonStyle(.plain)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }
-                .padding(10)
-                .background(Color.black.opacity(0.7))
+                .padding(20)
+                .frame(width: 240, height: 250)
+                .background(Color.white)
                 .cornerRadius(12)
-                .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
-                .position(x: timePickerPosition.x + 100, y: timePickerPosition.y + 50)
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                .position(x: timePickerPosition.x + 150, y: timePickerPosition.y + 100)
                 .zIndex(9999)
             }
             
             if showDatePicker {
-                VStack {
+                VStack(spacing: 0) {
                     DatePicker("", selection: $selectedDate, displayedComponents: .date)
                         .datePickerStyle(.wheel)
                         .labelsHidden()
-                        .frame(width: 200, height: 100)
-                        .colorScheme(.dark)
-                        .accentColor(.white)
+                        .frame(width: 300, height: 150)
+                        .colorScheme(.light)
+                        .accentColor(.blue)
+                    
+                    Spacer()
                     
                     Button("Set") {
                         let formatter = DateFormatter()
@@ -139,17 +145,19 @@ struct TagListView: View {
                         }
                         showDatePicker = false
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
-                    .background(Color.white.opacity(0.2))
+                    .buttonStyle(.plain)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(8)
                 }
-                .padding(10)
-                .background(Color.black.opacity(0.7))
+                .padding(20)
+                .frame(width: 340, height: 250)
+                .background(Color.white)
                 .cornerRadius(12)
-                .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
-                .position(x: datePickerPosition.x + 100, y: datePickerPosition.y + 50)
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+                .position(x: datePickerPosition.x + 150, y: datePickerPosition.y + 100)
                 .zIndex(9999)
             }
         }

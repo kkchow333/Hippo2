@@ -10,9 +10,9 @@
 		257A5C8D2DC03ABE00A1138D /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A5C8C2DC03ABB00A1138D /* TagListView.swift */; };
 		CE3AD0B12DBF63FC004754BE /* DynamicWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AD0B02DBF63FC004754BE /* DynamicWindowView.swift */; };
 		CE3AD0B52DC011B2004754BE /* FlexibleLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3AD0B42DC011B2004754BE /* FlexibleLayoutView.swift */; };
+		CE3AD0DD2DC0584E004754BE /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = CE3AD0DC2DC0584E004754BE /* RealityKitContent */; };
 		FE022D812BAF16F40067F4EF /* DragRotationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE022D802BAF16F40067F4EF /* DragRotationModifier.swift */; };
 		FE022D852BAF19990067F4EF /* ModelEntity+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE022D832BAF19980067F4EF /* ModelEntity+Extension.swift */; };
-		FE30A0362BAEFC1600DA6A38 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = FE30A0352BAEFC1600DA6A38 /* RealityKitContent */; };
 		FE30A0382BAEFC1600DA6A38 /* VisionStackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE30A0372BAEFC1600DA6A38 /* VisionStackApp.swift */; };
 		FE30A03A2BAEFC1600DA6A38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE30A0392BAEFC1600DA6A38 /* ContentView.swift */; };
 		FE30A03E2BAEFC1700DA6A38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE30A03D2BAEFC1700DA6A38 /* Assets.xcassets */; };
@@ -45,18 +45,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE30A0362BAEFC1600DA6A38 /* RealityKitContent in Frameworks */,
+				CE3AD0DD2DC0584E004754BE /* RealityKitContent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE3AD0DB2DC05845004754BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FE30A0272BAEFC1600DA6A38 = {
 			isa = PBXGroup;
 			children = (
 				FE30A0322BAEFC1600DA6A38 /* VisionStack */,
 				FE30A0332BAEFC1600DA6A38 /* Packages */,
+				CE3AD0DB2DC05845004754BE /* Frameworks */,
 				FE30A0312BAEFC1600DA6A38 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,7 +138,7 @@
 			);
 			name = VisionStack;
 			packageProductDependencies = (
-				FE30A0352BAEFC1600DA6A38 /* RealityKitContent */,
+				CE3AD0DC2DC0584E004754BE /* RealityKitContent */,
 			);
 			productName = VisionStack;
 			productReference = FE30A0302BAEFC1600DA6A38 /* VisionStack.app */;
@@ -399,7 +407,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FE30A0352BAEFC1600DA6A38 /* RealityKitContent */ = {
+		CE3AD0DC2DC0584E004754BE /* RealityKitContent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RealityKitContent;
 		};
